@@ -91,7 +91,7 @@ function Disk(x, y, img) {
   this.x = x;
   this.y = y;
   this.min = 3;
-  this.max = 13;
+  this.max = 7;
   this.rad = this.min
   this.img = img;
   this.dia = function() {
@@ -110,7 +110,7 @@ function Disk(x, y, img) {
     }
 
     for (var i = 0; i != other.length; ++i) {
-      if (dist(this.x, this.y, other[i].x, other[i].y) < this.rad) {
+      if (dist(this.x, this.y, other[i].x, other[i].y) < 3) {
         return true;
       }
     }
