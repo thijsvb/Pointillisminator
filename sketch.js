@@ -1,24 +1,16 @@
-var goButton, hoButton, box;
+var middle;
+var testButton;
 var disks = [];
 var img;
 var go = false;
 
-function preload() {
-  img = loadImage("test.jpg");
-}
-
 function setup() {
-  goButton = createButton("GO!");
-  goButton.mousePressed(startStuff);
-  hoButton = createButton("HO!");
-  hoButton.mousePressed(stopStuff);
-  var ln = createP('');
+  testButton = createButton("Use test image");
+  testButton.mousePressed(loadTest);
   var can = createCanvas(500, 500);
 
-  var middle = select('#middle');
-  middle.child(goButton);
-  middle.child(hoButton);
-  middle.child(ln);
+  middle = select("#middle");
+  middle.child(testButton);
   middle.child(can);
 
   clear();
@@ -34,15 +26,21 @@ function draw() {
     }
     doStuff();
   }
+
+  if(frameRate() < 1) {
+    console.log(frameRate());
+    stopStuff();
+  }
+}
+
+function loadTest() {
+  img = loadImage("test.jpg", startStuff);
 }
 
 function startStuff() {
+  img.loadPixels();
   clear();
   disks = [];
-  var h = random(255);
-  tCol = color(h, 255, 255);
-  mCol = color((h + 75) % 256, 255, 255);
-  bCol = color((h + 171) % 256, 255, 255);
   go = true;
 }
 
@@ -60,21 +58,12 @@ function stopStuff() {
 }
 
 function doStuff() {
-  var ranX = random(width);
-  var ranY = random(height);
-  var d = new Disk(ranX, ranY, img);
+  var d = new Disk(random(width), random(height), img);
 
   var count = 0;
   while (d.olap(disks)) {
-    ranX = random(width);
-    ranY = random(height);
-    d.x = ranX;
-    d.y = ranY;
-
-    if (box.checked()) {
-      fill(255);
-      ellipse(ranX, ranY, 10, 10);
-    }
+    d.x = random(width);
+    d.y = random(width);
     if (++count > 1000) return;
   }
 
@@ -100,7 +89,6 @@ function Disk(x, y, img) {
   this.col = function() {
     var X = floor(constrain(this.x, 0, this.img.width)) * 4;
     var Y = floor(constrain(this.y, 0, this.img.height)) * 4;
-    this.img.loadPixels();
     var ind = Y * this.img.width + X;
     return color(this.img.pixels[ind], this.img.pixels[ind+1], this.img.pixels[ind+2], this.img.pixels[ind+3]);
   };
@@ -110,7 +98,7 @@ function Disk(x, y, img) {
     }
 
     for (var i = 0; i != other.length; ++i) {
-      if (dist(this.x, this.y, other[i].x, other[i].y) < 3) {
+      if (dist(this.x, this.y, other[i].x, other[i].y) < 5) {
         return true;
       }
     }
