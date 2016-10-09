@@ -1,4 +1,5 @@
 var middle;
+var can;
 var testButton;
 var disks = [];
 var img;
@@ -7,11 +8,29 @@ var go = false;
 function setup() {
   testButton = createButton("Use test image");
   testButton.mousePressed(loadTest);
-  var can = createCanvas(500, 500);
+  var p = createP('');
+  can = createCanvas(500, 500);
 
   middle = select("#middle");
   middle.child(testButton);
+  middle.child(p);
   middle.child(can);
+
+  middle.dragOver(
+    function() {
+      highlight("#303030");
+    }
+  );
+  middle.dragLeave(
+    function() {
+      highlight("#202020");
+    }
+  );
+  middle.drop(gotFile,
+    function() {
+      highlight("#202020")
+    }
+  );
 
   clear();
   noStroke();
@@ -27,14 +46,29 @@ function draw() {
     doStuff();
   }
 
-  if(frameRate() < 1) {
-    console.log(frameRate());
+  if (frameRate() < 5) {
     stopStuff();
   }
 }
 
+function highlight(color) {
+  middle.style("background-color", color);
+}
+
 function loadTest() {
   img = loadImage("test.jpg", startStuff);
+}
+
+function gotFile(file) {
+  if(file.type === "image") {
+    img = createImage(file.data).hide;
+    // This is supposed to get me a p5 image object, but it doesn't :(
+    // See this example: http://p5js.org/examples/dom-drop.html
+    // can.resize(img.width, img.height);
+    // startStuff();
+  } else {
+    highlight("#302020");
+  }
 }
 
 function startStuff() {
@@ -90,7 +124,7 @@ function Disk(x, y, img) {
     var X = floor(constrain(this.x, 0, this.img.width)) * 4;
     var Y = floor(constrain(this.y, 0, this.img.height)) * 4;
     var ind = Y * this.img.width + X;
-    return color(this.img.pixels[ind], this.img.pixels[ind+1], this.img.pixels[ind+2], this.img.pixels[ind+3]);
+    return color(this.img.pixels[ind], this.img.pixels[ind + 1], this.img.pixels[ind + 2], this.img.pixels[ind + 3]);
   };
   this.olap = function(other) {
     if (this.rad > this.max) {
