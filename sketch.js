@@ -9,7 +9,7 @@ function setup() {
   testButton = createButton("Use test image");
   testButton.mousePressed(loadTest);
   var p = createP('');
-  can = createCanvas(500, 500);
+  can = createCanvas(1080, 810);
 
   middle = select("#middle");
   middle.child(testButton);
@@ -56,7 +56,7 @@ function highlight(color) {
 }
 
 function loadTest() {
-  img = loadImage("test.jpg", startStuff);
+  img = loadImage("test.jpg", startTest);
 }
 
 function gotFile(file) {
@@ -69,6 +69,11 @@ function gotFile(file) {
   } else {
     highlight("#302020");
   }
+}
+
+function startTest() {
+  img.resize(width, height);
+  startStuff();
 }
 
 function startStuff() {
