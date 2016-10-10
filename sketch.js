@@ -9,7 +9,9 @@ function setup() {
   testButton = createButton("Use test image");
   testButton.mousePressed(loadTest);
   var p = createP('');
-  can = createCanvas(960, 720);
+  can = createCanvas(500, 500);
+  textAlign(CENTER, CENTER);
+  text("Drag and drop an image", width / 2, height / 2);
 
   middle = select("#middle");
   middle.child(testButton);
@@ -56,7 +58,7 @@ function loadTest() {
 }
 
 function gotFile(file) {
-  if(file.type === "image") {
+  if (file.type === "image") {
     img = createImage(file.data).hide;
     // This is supposed to get me a p5 image object, but it doesn't :(
     // See this example: http://p5js.org/examples/dom-drop.html
