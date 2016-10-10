@@ -45,10 +45,6 @@ function draw() {
     }
     doStuff();
   }
-
-//   if (frameRate() < 5) {
-//     stopStuff();
-//   }
 }
 
 function highlight(color) {
@@ -72,7 +68,8 @@ function gotFile(file) {
 }
 
 function startTest() {
-  img.resize(width, height);
+  can.resize(img.width, img.height);
+  image(img, 0, 0);
   startStuff();
 }
 
@@ -112,6 +109,10 @@ function doStuff() {
   --d.rad;
 
   disks[disks.length] = d;
+
+  if (frameRate() < 5) {
+    stopStuff();
+  }
 }
 
 
