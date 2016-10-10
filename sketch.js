@@ -9,7 +9,7 @@ function setup() {
   testButton = createButton("Use test image");
   testButton.mousePressed(loadTest);
   var p = createP('');
-  can = createCanvas(540, 405);
+  can = createCanvas(720, 540);
 
   middle = select("#middle");
   middle.child(testButton);
