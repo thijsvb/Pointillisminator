@@ -46,9 +46,9 @@ function draw() {
     doStuff();
   }
 
-  if (frameRate() < 5) {
-    stopStuff();
-  }
+//   if (frameRate() < 5) {
+//     stopStuff();
+//   }
 }
 
 function highlight(color) {
