@@ -112,9 +112,9 @@ function doStuff() {
 
   disks[disks.length] = d;
 
-  if (frameRate() < 5) {
-    stopStuff();
-  }
+  // if (frameRate() < 1) {
+  //   stopStuff();
+  // }
 }
 
 
